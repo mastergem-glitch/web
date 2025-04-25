@@ -1,335 +1,366 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motivational Quote Generator</title>
+    <title>Ultimate Dot Challenge</title>
     <style>
-        /* Reset and set gradient background */
         body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Background animations container */
-        .background-animations {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-        }
-
-        /* Base star styles */
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 2s infinite;
-        }
-
-        /* Base planet styles */
-        .planet {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, #fff, #ccc);
-        }
-
-        /* Twinkle animation for stars */
-        @keyframes twinkle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Movement animations for planets */
-        @keyframes move-horizontal {
-            0% { transform: translateX(-20px); }
-            100% { transform: translateX(calc(100vw + 20px)); }
-        }
-
-        @keyframes move-vertical {
-            0% { transform: translateY(-20px); }
-            100% { transform: translateY(calc(100vh + 20px)); }
-        }
-
-        @keyframes move-diagonal {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(100vw, 100vh); }
-        }
-
-        @keyframes move-horizontal-reverse {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-calc(100vw + 20px)); }
-        }
-
-        @keyframes move-vertical-reverse {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-calc(100vh + 20px)); }
-        }
-
-        /* Unique styles for stars */
-        .star1 { top: 10%; left: 15%; animation-duration: 1.5s; }
-        .star2 { top: 20%; left: 25%; animation-duration: 2s; }
-        .star3 { top: 30%; left: 35%; animation-duration: 1.8s; }
-        .star4 { top: 40%; left: 45%; animation-duration: 2.2s; }
-        .star5 { top: 50%; left: 55%; animation-duration: 1.6s; }
-        .star6 { top: 60%; left: 65%; animation-duration: 2.5s; }
-        .star7 { top: 70%; left: 75%; animation-duration: 1.9s; }
-        .star8 { top: 80%; left: 85%; animation-duration: 2.1s; }
-        .star9 { top: 15%; left: 50%; animation-duration: 1.7s; }
-        .star10 { top: 25%; left: 70%; animation-duration: 2.3s; }
-
-        /* Unique styles for planets */
-        .planet1 { width: 10px; height: 10px; top: 20%; left: -10px; animation: move-horizontal 30s linear infinite; }
-        .planet2 { width: 15px; height: 15px; top: -15px; left: 30%; animation: move-vertical 40s linear infinite; }
-        .planet3 { width: 8px; height: 8px; top: 0; left: 0; animation: move-diagonal 25s linear infinite; }
-        .planet4 { width: 12px; height: 12px; top: 50%; left: calc(100vw + 12px); animation: move-horizontal-reverse 35s linear infinite; }
-        .planet5 { width: 18px; height: 18px; top: calc(100vh + 18px); left: 70%; animation: move-vertical-reverse 45s linear infinite; }
-
-        /* Main content container */
-        .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 1;
-        }
-
-        /* Emoji styles */
-        #emoji {
-            font-size: 100px;
-            cursor: pointer;
-            animation: wiggle 2s infinite;
-        }
-
-        #emoji:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes wiggle {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            50% { transform: rotate(0deg); }
-            75% { transform: rotate(-5deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        /* Quote styles */
-        #quote {
-            margin-top: 20px;
-            font-size: 24px;
+            background: linear-gradient(135deg, #1a1a1a, #4a148c);
+            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
             color: white;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+            touch-action: manipulation;
+        }
+
+        #gameContainer {
+            width: 95%;
+            height: 60vh;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+            margin: 10px 0;
+            touch-action: none;
+        }
+
+        .dot {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(0.95); }
+        }
+
+        #scoreBoard {
+            font-size: 24px;
+            margin: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #levelInfo {
+            font-size: 20px;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            margin: 5px;
+        }
+
+        #timer {
+            font-size: 20px;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            margin: 5px;
+        }
+
+        #emojiStatus {
+            font-size: 40px;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #00c853, #00e676);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 15px;
+            background-color: rgba(255,255,255,0.2);
             border-radius: 10px;
-            max-width: 80%;
-            text-align: center;
+            margin: 10px;
+            overflow: hidden;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            #emoji { font-size: 80px; }
-            #quote { font-size: 18px; }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00c853, #ffd700);
+            transition: width 0.3s;
         }
 
-        @media (max-width: 400px) {
-            #emoji { font-size: 60px; }
-            #quote { font-size: 16px; }
+        #instructions {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 10px 0;
+            width: 90%;
+            max-width: 400px;
+            color: #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .container-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        h2 {
+            color: #00c853;
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        li {
+            margin: 8px 0;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        @media (min-width: 768px) {
+            .container-row {
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+            }
+            #gameContainer {
+                height: 500px;
+                width: 600px;
+            }
+            #instructions {
+                width: 300px;
+                height: 500px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Animated background -->
-    <div class="background-animations">
-        <div class="star star1"></div>
-        <div class="star star2"></div>
-        <div class="star star3"></div>
-        <div class="star star4"></div>
-        <div class="star star5"></div>
-        <div class="star star6"></div>
-        <div class="star star7"></div>
-        <div class="star star8"></div>
-        <div class="star star9"></div>
-        <div class="star star10"></div>
-        <div class="planet planet1"></div>
-        <div class="planet planet2"></div>
-        <div class="planet planet3"></div>
-        <div class="planet planet4"></div>
-        <div class="planet planet5"></div>
-    </div>
-
-    <!-- Main content -->
-    <div class="container">
-        <span id="emoji" role="button" aria-label="Click to get a motivational quote" tabindex="0">😂</span>
-        <div id="quote">Click the emoji to get a motivational quote!</div>
+    <div id="scoreBoard">🌟 Score: <span id="score">0</span></div>
+    <div id="levelInfo">🎚️ Level: <span id="level">1</span> | 🎯 Required: <span id="required">50</span></div>
+    <div id="timer">⏳ Time Left: <span id="time">30</span>s</div>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    <div id="emojiStatus">😊</div>
+    <button id="startButton">🎮 Start Game</button>
+    
+    <div class="container-row">
+        <div id="gameContainer"></div>
+        <div id="instructions">
+            <h2>How to Play 🎯</h2>
+            <ul>
+                <li>Tap colored dots to score points</li>
+                <li>Reach required points before time runs out!</li>
+                <li>Each level gets harder with less time</li>
+                <li>Colors give different points:<br>
+                    🔴 Red: 1 point<br>
+                    🟢 Green: 2 points<br>
+                    🔵 Blue: 3 points<br>
+                    🟡 Yellow: 5 points</li>
+                <li>Emoji Mood:<br>
+                    😊/🚀 Good progress<br>
+                    😬/😰 Hurry up!<br>
+                    💀 Game Over!</li>
+            </ul>
+        </div>
     </div>
 
     <script>
-        // Array of 100 quotes with corresponding emojis
-        const quotes = [
-            // Success & Growth
-            { quote: "Success is not final, failure is not fatal: it is the courage to continue that counts. – Winston Churchill", emoji: "💪" },
-            { quote: "Do what you can, with what you have, where you are. – Theodore Roosevelt", emoji: "🛠️" },
-            { quote: "The only limit to our realization of tomorrow is our doubts of today. – Franklin D. Roosevelt", emoji: "🤔" },
-            { quote: "Start where you are. Use what you have. Do what you can. – Arthur Ashe", emoji: "🏁" },
-            { quote: "Success doesn’t come from what you do occasionally, it comes from what you do consistently.", emoji: "🔄" },
-            { quote: "Your potential is endless. Go do what you were created to do.", emoji: "🌟" },
-            { quote: "Dreams don’t work unless you do.", emoji: "💼" },
-            { quote: "Small steps in the right direction can turn out to be the biggest steps of your life.", emoji: "👣" },
-            { quote: "You don’t have to be great to start, but you have to start to be great. – Zig Ziglar", emoji: "🚀" },
-            { quote: "Everything you’ve ever wanted is on the other side of fear. – George Addair", emoji: "😨" },
+        const gameContainer = document.getElementById('gameContainer');
+        const scoreElement = document.getElementById('score');
+        const levelElement = document.getElementById('level');
+        const requiredElement = document.getElementById('required');
+        const timeElement = document.getElementById('time');
+        const emojiElement = document.getElementById('emojiStatus');
+        const progressBar = document.getElementById('progress');
+        const startButton = document.getElementById('startButton');
+        
+        let score = 0;
+        let currentLevel = 1;
+        let requiredScore = 50;
+        let timeLeft = 30;
+        let gameInterval;
+        let moveInterval;
+        let timerInterval;
+        const colors = {
+            red: { value: 1, code: '#ff4444' },
+            green: { value: 2, code: '#00c853' },
+            blue: { value: 3, code: '#2979ff' },
+            yellow: { value: 5, code: '#ffd600' }
+        };
 
-            // Hard Work & Persistence
-            { quote: "Work hard in silence, let success make the noise.", emoji: "🤫" },
-            { quote: "It’s not whether you get knocked down, it’s whether you get up. – Vince Lombardi", emoji: "🥊" },
-            { quote: "Failure is simply the opportunity to begin again, this time more intelligently. – Henry Ford", emoji: "🔄" },
-            { quote: "Push yourself, because no one else is going to do it for you.", emoji: "🏋️" },
-            { quote: "Winners are not those who never fail but those who never quit.", emoji: "🏆" },
-            { quote: "You didn’t come this far to only come this far.", emoji: "🛤️" },
-            { quote: "Stay patient and trust your journey.", emoji: "⏳" },
-            { quote: "Success is the sum of small efforts, repeated day in and day out. – Robert Collier", emoji: "📅" },
-            { quote: "Don’t be afraid to give up the good to go for the great. – John D. Rockefeller", emoji: "🎯" },
-            { quote: "The secret of success is to do the common things uncommonly well. – John D. Rockefeller", emoji: "🌟" },
-
-            // Mindset & Positivity
-            { quote: "Happiness is not something ready-made. It comes from your own actions. – Dalai Lama", emoji: "😊" },
-            { quote: "A negative mind will never give you a positive life.", emoji: "🚫" },
-            { quote: "Your mindset determines your future.", emoji: "🧠" },
-            { quote: "Difficulties in life are intended to make us better, not bitter.", emoji: "🌱" },
-            { quote: "Don’t let yesterday take up too much of today. – Will Rogers", emoji: "⏳" },
-            { quote: "The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty. – Winston Churchill", emoji: "😎" },
-            { quote: "You are stronger than you think.", emoji: "💪" },
-            { quote: "Stay positive, work hard, and make it happen.", emoji: "👍" },
-            { quote: "When life gets harder, challenge yourself to be stronger.", emoji: "🏋️" },
-            { quote: "A little progress each day adds up to big results.", emoji: "📈" },
-
-            // Overcoming Fear & Challenges
-            { quote: "Feel the fear and do it anyway.", emoji: "😨" },
-            { quote: "Doubt kills more dreams than failure ever will. – Suzy Kassem", emoji: "🚫" },
-            { quote: "Don’t let fear decide your future.", emoji: "🚷" },
-            { quote: "The best way to predict your future is to create it. – Peter Drucker", emoji: "🛠️" },
-            { quote: "Obstacles are those frightful things you see when you take your eyes off your goal. – Henry Ford", emoji: "🚧" },
-            { quote: "The harder the struggle, the more glorious the triumph.", emoji: "🏆" },
-            { quote: "You can’t climb the ladder of success with your hands in your pockets. – Arnold Schwarzenegger", emoji: "🪜" },
-            { quote: "Turn your wounds into wisdom. – Oprah Winfrey", emoji: "🩹" },
-            { quote: "When everything feels like an uphill battle, think of the view from the top.", emoji: "🏔️" },
-            { quote: "Storms make trees take deeper roots.", emoji: "🌳" },
-
-            // Self-Confidence & Self-Worth
-            { quote: "Believe in yourself, and you’re halfway there. – Theodore Roosevelt", emoji: "🙌" },
-            { quote: "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.", emoji: "❤️" },
-            { quote: "Act as if what you do makes a difference. It does. – William James", emoji: "🌟" },
-            { quote: "You are enough just as you are. – Meghan Markle", emoji: "🌸" },
-            { quote: "Confidence is not ‘They will like me.’ Confidence is ‘I’ll be fine if they don’t.’", emoji: "😌" },
-            { quote: "Your value doesn’t decrease based on someone’s inability to see your worth.", emoji: "💎" },
-            { quote: "Be yourself; everyone else is already taken. – Oscar Wilde", emoji: "🦄" },
-            { quote: "You were born to be real, not perfect.", emoji: "🌟" },
-            { quote: "Own your story, love yourself, and step into your greatness.", emoji: "📖" },
-            { quote: "What you think about yourself is more important than what others think of you.", emoji: "🧠" },
-
-            // Courage & Taking Action
-            { quote: "Life begins at the end of your comfort zone. – Neale Donald Walsch", emoji: "🌅" },
-            { quote: "Do one thing every day that scares you. – Eleanor Roosevelt", emoji: "😨" },
-            { quote: "If you wait for perfect conditions, you will never get anything done.", emoji: "⏳" },
-            { quote: "Great things never come from comfort zones.", emoji: "🚀" },
-            { quote: "Don’t wait for opportunity. Create it.", emoji: "🛠️" },
-            { quote: "Leap, and the net will appear.", emoji: "🪂" },
-            { quote: "The only way to do great work is to love what you do. – Steve Jobs", emoji: "❤️" },
-            { quote: "If it doesn’t challenge you, it won’t change you.", emoji: "🏋️" },
-            { quote: "Go confidently in the direction of your dreams. Live the life you have imagined. – Henry David Thoreau", emoji: "🏃" },
-            { quote: "Act as if it were impossible to fail. – Dorothea Brande", emoji: "🌟" },
-
-            // Success & Wealth Mindset
-            { quote: "Money is a byproduct of value creation.", emoji: "💰" },
-            { quote: "Success isn’t about how much money you make, it’s about the difference you make in people’s lives. – Michelle Obama", emoji: "🤝" },
-            { quote: "Rich people think big. Poor people think small. – T. Harv Eker", emoji: "💡" },
-            { quote: "Formal education will make you a living; self-education will make you a fortune. – Jim Rohn", emoji: "📚" },
-            { quote: "Your network is your net worth.", emoji: "🌐" },
-            { quote: "The more you learn, the more you earn.", emoji: "🧠" },
-            { quote: "Opportunities don’t happen. You create them. – Chris Grosser", emoji: "🛠️" },
-            { quote: "Wealth is not about having a lot of money; it’s about having a lot of options. – Chris Rock", emoji: "🗝️" },
-            { quote: "Build your dreams, or someone else will hire you to build theirs. – Farrah Gray", emoji: "🏗️" },
-            { quote: "Money flows to those who provide value to others.", emoji: "💸" },
-
-            // Resilience & Never Giving Up
-            { quote: "Tough times never last, but tough people do. – Robert H. Schuller", emoji: "💪" },
-            { quote: "You may have to fight a battle more than once to win it. – Margaret Thatcher", emoji: "⚔️" },
-            { quote: "Don’t stop when you’re tired. Stop when you’re done.", emoji: "🛑" },
-            { quote: "Pain is temporary. Quitting lasts forever. – Lance Armstrong", emoji: "⏳" },
-            { quote: "The comeback is always stronger than the setback.", emoji: "🔄" },
-            { quote: "Be like a postage stamp—stick to a thing until you get there. – Josh Billings", emoji: "📬" },
-            { quote: "Fall seven times, stand up eight. – Japanese Proverb", emoji: "🧍" },
-            { quote: "You are one decision away from a completely different life.", emoji: "🚪" },
-            { quote: "No pressure, no diamonds. – Thomas Carlyle", emoji: "💎" },
-            { quote: "Life doesn’t get easier. You just get stronger.", emoji: "💪" },
-
-            // Happiness & Life Purpose
-            { quote: "Live life to the fullest and focus on the positive. – Matt Cameron", emoji: "😄" },
-            { quote: "Happiness depends upon ourselves. – Aristotle", emoji: "😊" },
-            { quote: "Enjoy the little things in life, for one day you may look back and realize they were the big things. – Robert Brault", emoji: "🌸" },
-            { quote: "The purpose of life is not to be happy. It is to be useful, to be honorable, to be compassionate. – Ralph Waldo Emerson", emoji: "🤝" },
-            { quote: "Live for today, plan for tomorrow, and party tonight.", emoji: "🎉" },
-            { quote: "Be so good they can’t ignore you. – Steve Martin", emoji: "🌟" },
-            { quote: "Make today so awesome that yesterday gets jealous.", emoji: "😎" },
-            { quote: "Smile. It confuses people.", emoji: "😄" },
-            { quote: "Life is short. Smile while you still have teeth.", emoji: "😁" },
-            { quote: "Do what makes your soul shine.", emoji: "✨" },
-
-            // Final 10 Power Quotes
-            { quote: "Winners focus on winning, losers focus on winners.", emoji: "🏆" },
-            { quote: "Be stronger than your excuses.", emoji: "💪" },
-            { quote: "If you want different results, do something different.", emoji: "🔄" },
-            { quote: "Stop waiting for Friday, summer, or someone to love you. Happiness is now.", emoji: "⏳" },
-            { quote: "Don’t just exist. Live.", emoji: "🌟" },
-            { quote: "You are your only limit.", emoji: "🚫" },
-            { quote: "The dream is free. The hustle is sold separately.", emoji: "💼" },
-            { quote: "Chase your dreams like your life depends on it.", emoji: "🏃" },
-            { quote: "Keep going. Your future self will thank you.", emoji: "⏳" },
-            { quote: "One day, you will tell your story and it will inspire others.", emoji: "📖" }
-        ];
-
-        // Track the current quote index to avoid immediate repeats
-        let currentIndex = -1;
-
-        // Click event for the emoji
-        document.getElementById('emoji').addEventListener('click', function() {
-            const quoteDiv = document.getElementById('quote');
-            const emojiSpan = document.getElementById('emoji');
-
-            // Fade out the quote
-            quoteDiv.style.opacity = '0';
-
-            setTimeout(function() {
-                let randomIndex;
-                do {
-                    randomIndex = Math.floor(Math.random() * quotes.length);
-                } while (randomIndex === currentIndex);
-                currentIndex = randomIndex;
-
-                const selectedQuote = quotes[randomIndex];
-                emojiSpan.textContent = selectedQuote.emoji;
-                quoteDiv.textContent = selectedQuote.quote;
-                quoteDiv.style.opacity = '1';
-            }, 600); // Wait slightly longer than the 0.5s fade-out
-        });
-
-        // Keyboard accessibility: trigger click on Enter or Space
-        document.getElementById('emoji').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                this.click();
+        function updateEmoji() {
+            const progress = score / requiredScore;
+            const timeProgress = timeLeft / (30 - (currentLevel * 2));
+            
+            if (timeLeft < 10 || progress < 0.5) {
+                emojiElement.textContent = Math.random() > 0.5 ? '😬' : '😰';
+                emojiElement.style.color = '#ff4444';
+            } else if (progress < 0.8) {
+                emojiElement.textContent = '😐';
+                emojiElement.style.color = '#ffd700';
+            } else {
+                emojiElement.textContent = Math.random() > 0.5 ? '😊' : '🚀';
+                emojiElement.style.color = '#00e676';
             }
-        });
+        }
+
+        function createDot() {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            
+            const x = Math.random() * (gameContainer.offsetWidth - 40);
+            const y = Math.random() * (gameContainer.offsetHeight - 40);
+            
+            const colorChance = Math.random();
+            let colorKey = 'red';
+            if (colorChance < 0.05 * currentLevel) colorKey = 'yellow';
+            else if (colorChance < 0.2 * currentLevel) colorKey = 'blue';
+            else if (colorChance < 0.5 * currentLevel) colorKey = 'green';
+            
+            dot.style.left = `${x}px`;
+            dot.style.top = `${y}px`;
+            dot.style.backgroundColor = colors[colorKey].code;
+            dot.dataset.points = colors[colorKey].value;
+
+            function handleTap(e) {
+                e.preventDefault();
+                score += parseInt(dot.dataset.points);
+                scoreElement.textContent = score;
+                updateEmoji();
+                dot.style.opacity = '0';
+                setTimeout(() => dot.remove(), 300);
+            }
+
+            dot.addEventListener('click', handleTap);
+            dot.addEventListener('touchstart', handleTap);
+
+            gameContainer.appendChild(dot);
+        }
+
+        function moveDots() {
+            const dots = document.getElementsByClassName('dot');
+            const containerWidth = gameContainer.offsetWidth - 40;
+            const containerHeight = gameContainer.offsetHeight - 40;
+            
+            Array.from(dots).forEach(dot => {
+                const speed = 3 + (currentLevel * 1.5);
+                const moveX = (Math.random() * speed * 2 - speed);
+                const moveY = (Math.random() * speed * 2 - speed);
+                
+                let newX = parseFloat(dot.style.left) + moveX;
+                let newY = parseFloat(dot.style.top) + moveY;
+                
+                newX = Math.max(0, Math.min(newX, containerWidth));
+                newY = Math.max(0, Math.min(newY, containerHeight));
+                
+                dot.style.left = `${newX}px`;
+                dot.style.top = `${newY}px`;
+            });
+        }
+
+        function startGame() {
+            score = 0;
+            currentLevel = 1;
+            requiredScore = 50;
+            timeLeft = 30;
+            scoreElement.textContent = '0';
+            levelElement.textContent = '1';
+            requiredElement.textContent = '50';
+            timeElement.textContent = '30';
+            gameContainer.innerHTML = '';
+            startButton.disabled = true;
+            progressBar.style.width = '100%';
+            emojiElement.textContent = '😊';
+
+            clearInterval(gameInterval);
+            clearInterval(moveInterval);
+            clearInterval(timerInterval);
+
+            gameInterval = setInterval(() => {
+                createDot();
+                if(currentLevel >= 5) createDot();
+            }, 1000);
+
+            moveInterval = setInterval(moveDots, 50);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeElement.textContent = timeLeft;
+                const maxTime = 30 - (currentLevel * 2);
+                progressBar.style.width = `${(timeLeft/maxTime) * 100}%`;
+
+                if(timeLeft <= 0) {
+                    score >= requiredScore ? levelUp() : endGame();
+                }
+                updateEmoji();
+            }, 1000);
+        }
+
+        function levelUp() {
+            clearInterval(gameInterval);
+            clearInterval(timerInterval);
+            
+            currentLevel++;
+            requiredScore = currentLevel * 50;
+            timeLeft = 30 - (currentLevel * 2);
+            score = 0;
+            
+            levelElement.textContent = currentLevel;
+            requiredElement.textContent = requiredScore;
+            scoreElement.textContent = '0';
+            timeElement.textContent = timeLeft;
+            
+            alert(`🎉 Level ${currentLevel - 1} Complete! Next Level: ${currentLevel}\nTime: ${timeLeft}s | Target: ${requiredScore}pts`);
+            
+            gameInterval = setInterval(() => {
+                createDot();
+                if(currentLevel >= 3) createDot();
+            }, Math.max(300, 1000 - (currentLevel * 100)));
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeElement.textContent = timeLeft;
+                const maxTime = 30 - (currentLevel * 2);
+                progressBar.style.width = `${(timeLeft/maxTime) * 100}%`;
+
+                if(timeLeft <= 0) {
+                    score >= requiredScore ? levelUp() : endGame();
+                }
+                updateEmoji();
+            }, 1000);
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            clearInterval(moveInterval);
+            clearInterval(timerInterval);
+            startButton.disabled = false;
+            const finalLevel = currentLevel - (score >= requiredScore ? 0 : 1);
+            emojiElement.textContent = '💀';
+            emojiElement.style.color = '#ff4444';
+            alert(`💀 Game Over! Reached Level ${finalLevel}\nFinal Score: ${score} | Best Level: ${finalLevel}`);
+        }
+
+        startButton.addEventListener('click', startGame);
+        startButton.addEventListener('touchstart', startGame);
     </script>
 </body>
 </html>
